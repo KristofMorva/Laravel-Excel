@@ -310,7 +310,7 @@ class Sheet
                 $lastColumnName = $import->lastColumnName();
             }
 
-            $row = (new Row($row, $headingRow))->toArray($nullValue, $calculateFormulas, $formatData);
+            $row = (new Row($row, $headingRow))->toArray($nullValue, $calculateFormulas, $formatData, $lastColumnName);
 
             if ($import instanceof WithMapping) {
                 $row = $import->map($row);
