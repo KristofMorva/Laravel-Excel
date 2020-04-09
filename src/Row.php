@@ -56,12 +56,12 @@ class Row
      *
      * @return array
      */
-    public function toArray($nullValue = null, $calculateFormulas = false, $formatData = true)
+    public function toArray($nullValue = null, $calculateFormulas = false, $formatData = true, $lastColumnName = null)
     {
         $cells = [];
 
         $i = 0;
-        foreach ($this->row->getCellIterator() as $cell) {
+        foreach ($this->row->getCellIterator('A', $lastColumnName) as $cell) {
             $value = (new Cell($cell))->getValue($nullValue, $calculateFormulas, $formatData);
 
             if (isset($this->headingRow[$i])) {

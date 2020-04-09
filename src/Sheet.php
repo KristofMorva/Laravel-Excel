@@ -19,6 +19,7 @@ use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
 use Maatwebsite\Excel\Concerns\WithCharts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use Maatwebsite\Excel\Concerns\WithColumnLimit;
 use Maatwebsite\Excel\Concerns\WithCustomChunkSize;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
@@ -304,6 +305,11 @@ class Sheet
 
         $rows = [];
         foreach ($this->worksheet->getRowIterator($startRow, $endRow) as $row) {
+            $lastColumnName = null;
+            if ($import instanceof WithColumnLimit) {
+                $lastColumnName = $import->lastColumnName();
+            }
+
             $row = (new Row($row, $headingRow))->toArray($nullValue, $calculateFormulas, $formatData);
 
             if ($import instanceof WithMapping) {
